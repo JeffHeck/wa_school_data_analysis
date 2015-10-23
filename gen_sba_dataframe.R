@@ -82,7 +82,8 @@ genSBAUseCases <- function() {
   
   #Selected school districts
   sba_dem_districts <- c("Everett School District", "Spokane School District","Seattle Public Schools", "Tacoma School District",
-                         "Bellevue School District","Northshore School District","Highline School District")
+                         "Bellevue School District","Northshore School District","Highline School District",
+                         "Monroe School District")
   #Process all districts
   for (i in 1:length(sba_dem_districts)) {
     district = sba_dem_districts[i]
