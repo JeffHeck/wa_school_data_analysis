@@ -3,21 +3,21 @@ source("chart_scatter.R")
 #' genSBADataframe
 #' Returns a dataframe with SBA data and demographics for each school for the selected grade.
 #' Filter parameters include a min school enrollment, min number of test takers
-#' 
+#'
 #' Input data files used:
 #'   DataFilesRaw//1_2_Demographic Information by School 2015.csv
 #'   DataFilesRaw//2_23_SBA Scores by School 2014-2015.csv
-#'   
-#' @param aGrade: Grade to filter on 
-#' @param aMinEnrollment: Min enrollment for schools to filter schools on 
-#' @param aMinTestTakers: Min number of test takers to filter schools on 
+#'
+#' @param aGrade: Grade to filter on
+#' @param aMinEnrollment: Min enrollment for schools to filter schools on
+#' @param aMinTestTakers: Min number of test takers to filter schools on
 #'
 #' @return sba_dem: A dataframe with merged SBA data and demographics
 #' @export
 #'
 #' @examples
 #' sba_dem <- genSBADataframe()
-genSBADataframe <- 
+genSBADataframe <-
   function(aGrade = 8, aMinEnrollment = 200, aMinTestTakers = 10) {
     #Read demographics file
     demographics <-
@@ -43,7 +43,7 @@ genSBADataframe <-
     #Merge files on building number
     sba_dem <-
       merge(sba_filtered, demographics, by = "BuildingNumber")
-
+    
     #Filter on min size school and number of test takers
     sba_dem <- sba_dem[sba_dem$TotalEnrollment > aMinEnrollment,]
     sba_dem <- sba_dem[sba_dem$MathTotalTested > aMinTestTakers,]
@@ -58,7 +58,7 @@ genSBADataframe <-
         "ELAPercentMetStandardIncludingPrevPass","ELAPercentLevel4",
         "TotalEnrollment"
       )]
-
+    
     #Sort
     sba_dem <-
       sba_dem[order(sba_dem$PercentFreeorReducedPricedMeals),]
@@ -79,10 +79,10 @@ genSBAUseCases <- function() {
     genSBADataframe(
       aGrade = 8, aMinEnrollment = 200, aMinTestTakers = 10
     )
-  sba_dem_districts <- sba_dem$District
-  sba_dem_districts <-
-    sba_dem_districts[!duplicated(sba_dem_districts)]
-  sba_dem_districts <- sort(sba_dem_districts)
+  
+  #Selected school districts
+  sba_dem_districts <- c("Everett School District", "Spokane School District","Seattle Public Schools", "Tacoma School District",
+                         "Bellevue School District","Northshore School District","Highline School District")
   #Process all districts
   for (i in 1:length(sba_dem_districts)) {
     district = sba_dem_districts[i]
