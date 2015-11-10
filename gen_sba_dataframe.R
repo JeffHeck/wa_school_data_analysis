@@ -81,9 +81,11 @@ genSBAUseCases <- function() {
     )
   
   #Selected school districts
-  sba_dem_districts <- c("Everett School District", "Spokane School District","Seattle Public Schools", "Tacoma School District",
-                         "Bellevue School District","Northshore School District","Highline School District",
-                         "Monroe School District")
+  sba_dem_districts <- sba_dem$District
+  sba_dem_districts <-
+    sba_dem_districts[!duplicated(sba_dem_districts)]
+  sba_dem_districts <- sort(sba_dem_districts)
+
   #Process all districts
   for (i in 1:length(sba_dem_districts)) {
     district = sba_dem_districts[i]
@@ -93,7 +95,7 @@ genSBAUseCases <- function() {
       aX = sba_dem$PercentFreeorReducedPricedMeals, aY = sba_dem$MathPercentMetStandardIncludingPrevPass,
       aTitle = paste(
         "WA Public Schools with 8th Graders with 200+ Students \n 2015 SBA Results (",
-        district,"Schools Highlighted)"
+        district," Schools Highlighted)",sep = ""
       ),
       aXLabel = "% low income students \n \n Source: OSPI", aYLabel = "% of 8th Graders Who Met Standard in Math",
       aSubsetX = sba_dem_subset$PercentFreeorReducedPricedMeals,
